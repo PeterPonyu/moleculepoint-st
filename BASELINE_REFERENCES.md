@@ -36,6 +36,37 @@ Verification date: 2026-06-08
 | starfish | Image-based transcriptomics pipelines | https://github.com/spacetx/starfish | `not cloned yet` | `master` | `5c86bdaa024c` | MIT reported by GitHub API |
 | spicyR | Spatial interaction analysis reference | https://github.com/SydneyBioX/spicyR | `not cloned yet` | `devel` | `64675c3eadc6` | license requires re-check |
 
+
+## A-level upgrade checkpoint: planted-GT segmented-reference run (2026-06-09)
+
+Purpose: replace the prior same-data agreement-only B-level evidence with a clean planted ground truth before any robustness/improvement claim is attempted.
+
+Planted benchmark command:
+
+```bash
+cd moleculepoint-st
+PYTHONPATH=src conda run --no-capture-output -n dl python scripts/data/simulate_point_patterns.py \
+  --out-dir outputs/planted_gt --seed 20260609 --grid-size 4 --n-genes 48 \
+  --clustered-genes 12 --coloc-pairs 6 --molecules-per-gene 320
+```
+
+Planted benchmark headline: `15360` molecules, `48` genes, `16` cells, `12` planted clustered genes, `36` random genes, `6` true co-localized pairs. Outputs include molecule coordinates plus cell/nucleus boundary tables and `truth_genes.csv` / `truth_pairs.csv`.
+
+Full segmented-reference command in the isolated environment:
+
+```bash
+cd moleculepoint-st
+/tmp/moleculepoint_bento_venv/bin/python baseline_runners/run_segmented_reference_planted.py \
+  --checkout ../../baselines/bento-tools-original \
+  --molecules-path outputs/planted_gt/molecules.parquet \
+  --cell-boundaries-path outputs/planted_gt/cell_boundaries.parquet \
+  --nucleus-boundaries-path outputs/planted_gt/nucleus_boundaries.parquet \
+  --truth-genes-path outputs/planted_gt/truth_genes.csv \
+  --out-dir outputs/planted_baseline --min-points-per-cell-gene 4
+```
+
+Observed checkpoint output: Bento `2.1.4.post2`, checkout `3e82209c19f871d560f2b2b9095a195cba722194`, `768` cell/gene groups scored, `0` skipped, planted clustered-gene recovery `AUPRC=1.0`, precision@12 `1.0`, recall@12 `1.0`, runtime approximately `4.5s`. This is a META checkpoint only: it verifies the planted GT is recoverable by the full segmented reference before any segmentation-failure robustness claim is made.
+
 ## Brand independence note
 
 Reference names in this file are provenance labels only. Local package names, CLI commands, figure labels, and manuscript novelty claims must use `MoleculePoint-ST` terminology and the independent refinements in `README.md`, not upstream branding.

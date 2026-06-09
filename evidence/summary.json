@@ -1,0 +1,55 @@
+{
+  "caveats": [
+    "Same-data recovery is not a superiority claim; the planted-GT robustness upgrade is not complete."
+  ],
+  "claim_gate_evidence": {
+    "ablation": true,
+    "baseline_comparison": true,
+    "failure_modes": true,
+    "license_review": true,
+    "public_data_smoke": true
+  },
+  "claim_scope": "Preliminary recovery evidence: coordinate-only point-pattern scores recover the segmentation-based shared metric on the same molecule table, while A-level planted-GT robustness is still under review.",
+  "metrics": {
+    "local_mean_nn_csr_ratio": 0.535397,
+    "local_top_pair_colocalization_lift": 0.073333,
+    "planted_gt_phase1_clustered_gene_auprc_reference": 1.0,
+    "planted_gt_phase1_n_genes": 48,
+    "planted_gt_phase1_n_molecules": 15360,
+    "same_data_overlap_genes": 135,
+    "same_data_shared_metric_pearson_r": 0.793427,
+    "same_data_shared_metric_spearman_rho": 0.813604,
+    "standard_point_pattern_mean_nn_csr_ratio": 0.521302
+  },
+  "missing_evidence": [
+    "planted_gt_meta_checkpoint",
+    "segmentation_corruption_robustness_sweep",
+    "independent_improvement_evidence"
+  ],
+  "project": "moleculepoint-st",
+  "provenance": [
+    {
+      "name": "Bento",
+      "note": "isolated shared-metric and planted-GT checkpoint runs",
+      "status": "RAN"
+    },
+    {
+      "name": "smoppix",
+      "status": "REFERENCE_REPORTED"
+    },
+    {
+      "name": "local coordinate-only point-pattern scoring",
+      "status": "RAN"
+    }
+  ],
+  "schema_version": 1,
+  "validation_bar": {
+    "met": false,
+    "required_for_validated": [
+      "clean planted ground truth verified by META",
+      "segmentation-corruption sweep showing coordinate-only robustness where segmented scoring degrades",
+      "independent dataset or planted-GT improvement rather than same-data recovery only"
+    ]
+  },
+  "visible_claim_label": "preliminary"
+}

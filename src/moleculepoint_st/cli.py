@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from .claim_status import graduation_claim_status
+from .claim_status import graduation_claim_status_line
 from .contracts import ClaimGateEvidence, evaluate_claim_gate
 from .real_smoke import RealSmokeConfig, default_molecules_path
 from .smoke import run_synthetic_smoke
@@ -86,7 +86,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(payload, sort_keys=True))
         return 0
     if args.command == "claim-status":
-        print(graduation_claim_status().value)
+        print(graduation_claim_status_line())
         return 0
     print(evaluate_claim_gate(ClaimGateEvidence()).value)
     return 0
